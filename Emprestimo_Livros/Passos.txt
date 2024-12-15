@@ -1,0 +1,49 @@
+﻿0. instalar os pacotes nuget entityframwork, sqlserver, design e tools
+1. foi criado o connection string no appsettings.json
+(( //server é copiado do que vem do sql server, o database é o nome escolhido para o  
+      //banco a ser criado e o trusted connection true evita certificacao para autenticacao))
+2. "fazer o programa entender a conexão" :
+	2.1. Criar a pasta data com a classe ApplicationDBContext.cs
+	2.2. Fazer essa classe herdar o DBContext e adicionar o using do entityframeworkcore
+	2.3. criar o constructor  public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { } 
+	2.4. adicionar a conexão no Program.cs, em cima do var app: 
+			builder.Services.AddDbContext<ApplicationDBContext>(options =>
+			{
+				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+			});
+
+3. criar quaisquer tabelas:
+	3.1. no ApplicationDBContext, inserir:  public DbSet<Nome_da_classe_model> NomeTabela { get; set; }
+	3.2. criar a migration:
+		3.2.1. abrir o Console do Gerenciador de Pacotes, em Ferramentas > Gerenciador de pacotes do nuget
+		3.2.2. utilizar o comando add-migration nomeMigracao, para gerar a migration e o codigo
+		3.2.3. aplicar a migration utilizando o comando update-database
+		3.2.4. criar uma migration vazia para Popular dados e criar pasta scripts para inserir o sql
+		3.3.5. ver como se executa um arquivo sql na pasta especifica com o exemplo Scripts/PopularEmprestimoLivros
+
+4. criar o controller para as operaçoes
+5. criar uma view para o controller:
+	5.1. adicionar a pasta com o nome da View e a pagina view
+	5.2. no _Layout.cshtml em views > shared, foi adicionado uma ancora com asp-controller=nomeControlador asp-action=nomeDaViewNoControlador
+	5.3. o nome da return View("nome") precisa ser igual ao nome da view, ja o nome do asp_action precisa ser igual da actionresult do controller 
+		 e o nome do controlador é o nome dele mesmo sem o controller
+	5.4. A view criada usa o conteudo do model, marcado com @Model, se esse conteudo vindo for proveniente de banco de dados,
+		é necessário criar o constructor na controller adicionando recebimento da classe de conexao com o banco e injetando a dependencia, como foi feito:
+		private readonly ApplicationDBContext _dbContext;
+
+        public EmprestimoLivrosController(ApplicationDBContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+		Apos isso, é possivel utilizar as operacoes de banco dentro da classe.
+	5.5. foi criado 
+            IEnumerable<EmprestimoModel> model = _dbContext.EmprestimoLivros; 
+			pois isso faz com que os registros indicados pelo banco que esta em _dbContext, na tabela EmprestimoLivros, sejam instanciados em um
+			IEnumerable (mais de um registro), do Tipo EmprestimoModel
+    5.6. Após isso é necessário passar para dentro do return view, como ja tem um argumento (nome da view), a variavel que carrega os dados 
+		(emprestimos) será o segundo argumento,  return View("ListarEmprestimos", emprestimos);
+	5.6 é necessário fazer o tratamento de dados dentro da view, utilizando o @Model IEnumerable<Classe> para utilizando os dados passados pela controller
+	
+
+

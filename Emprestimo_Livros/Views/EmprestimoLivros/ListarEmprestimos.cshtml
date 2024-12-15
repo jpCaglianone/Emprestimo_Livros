@@ -1,0 +1,33 @@
+﻿@model IEnumerable<EmprestimoModel>
+
+<table class="table table-dark table-hover">
+
+    <thead>
+        <tr>
+            <th scope="col"> Recebedor </th>
+            <th scope="col"> Fornecedor </th>
+            <th scope="col"> Livro </th>
+            <th scope="col"> Status </th>
+            <th scope="col"> Data Emprestimo </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if(Model != null)
+        {
+            @foreach(var emprestimo in Model)
+            {
+                <tr>
+                    <th>@emprestimo.RecebedorNome</th>
+                    <th>@emprestimo.RecebedorNome</th>
+                    <th>@emprestimo.RecebedorNome</th>
+                    <th>@emprestimo.RecebedorNome</th>
+                    <th>@emprestimo.RecebedorNome</th>
+
+                </tr>
+            }    
+
+        }
+    </tbody>
+
+</table>
