@@ -1,17 +1,9 @@
-﻿@page
-@model EmprestimoModel
+﻿@model Emprestimo_Livros.Models.EmprestimoModel
 
-@if (ViewBag.sucesso != null && !ViewBag.sucesso)
-    {
-        <h2 class="text-danger"> @ViewBag.mensagem </h2>
-    }
-    else
-    {
-        <h2 class="text-success"> @ViewBag.mensagem </h2>
-
-    }
-
-
+@if (ViewBag.sucesso != null)
+{
+    <h2 class="@(ViewBag.sucesso ? "text-success" : "text-danger")">@ViewBag.mensagem</h2>
+}
 
 <div class="container py-5">
     <div class="card shadow">
@@ -23,65 +15,63 @@
                 <div class="row g-3">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                    <!-- Campo para RecebedorNome -->
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label  class="form-label">Nome do Recebedor</label>
-                            <input 
+                            <label class="form-label">Nome do Recebedor</label>
+                            <input type="text"
+                                   asp-for="RecebedorNome"
                                    class="form-control"
                                    placeholder="Digite o nome de quem está recebendo o livro">
-                            <span a class="text-danger"></span>
+                            <span class="text-danger" asp-validation-for="RecebedorNome"></span>
                         </div>
                     </div>
 
+                    <!-- Campo para LivroEmprestadoNome -->
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label  class="form-label">Nome do Fornecedor</label>
-                            <input 
-                                   class="form-control"
-                                   placeholder="Digite o nome de quem está emprestando o livro">
-                            <span  class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="form-group mb-3">
-                            <label  class="form-label">Nome do Livro</label>
-                            <input 
+                            <label class="form-label">Nome do Livro</label>
+                            <input type="text"
+                                   asp-for="LivroEmprestadoNome"
                                    class="form-control"
                                    placeholder="Digite o nome do livro">
-                            <span aclass="text-danger"></span>
+                            <span class="text-danger" asp-validation-for="LivroEmprestadoNome"></span>
                         </div>
                     </div>
 
-                    <div class="col-12">
+                    <!-- Campo para FornecedorNome -->
+                    <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label  class="form-label">Data do Empréstimo</label>
-                            <input 
+                            <label class="form-label">Nome do Fornecedor</label>
+                            <input type="text"
+                                   asp-for="FornecedorNome"
                                    class="form-control"
-                                  placeholder=@ViewBag.data
+                                   placeholder="Digite o nome de quem está emprestando o livro">
+                            <span class="text-danger" asp-validation-for="FornecedorNome"></span>
+                        </div>
+                    </div>
+
+                    <!-- Campo para DataEmprestimoLivro (Somente leitura) -->
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Data do Empréstimo</label>
+                            <input type="text"
+                                   asp-for="DataEmprestimoLivro"
+                                   class="form-control"
                                    readonly>
-                            <span class="text-danger"></span>
+                            <span class="text-danger" asp-validation-for="DataEmprestimoLivro"></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                   
                     <button type="submit" class="btn btn-primary">Registrar Empréstimo</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-@{
-    /*
-         <script>
-         // Set current datetime when page loads
-         document.addEventListener('DOMContentLoaded', function () {
-             const now = new Date();
-             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-             document.getElementById('@Html.IdFor(m => m.DataEmprestimoLivro)').value = now.toISOString().slice(0, 16);
-     });
-     </script>
-    */
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
