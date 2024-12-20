@@ -1,0 +1,87 @@
+﻿@page
+@model EmprestimoModel
+
+@if (ViewBag.sucesso != null && !ViewBag.sucesso)
+    {
+        <h2 class="text-danger"> @ViewBag.mensagem </h2>
+    }
+    else
+    {
+        <h2 class="text-success"> @ViewBag.mensagem </h2>
+
+    }
+
+
+
+<div class="container py-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Registro de Empréstimo de Livros</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="Registrar">
+                <div class="row g-3">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label  class="form-label">Nome do Recebedor</label>
+                            <input 
+                                   class="form-control"
+                                   placeholder="Digite o nome de quem está recebendo o livro">
+                            <span a class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label  class="form-label">Nome do Fornecedor</label>
+                            <input 
+                                   class="form-control"
+                                   placeholder="Digite o nome de quem está emprestando o livro">
+                            <span  class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group mb-3">
+                            <label  class="form-label">Nome do Livro</label>
+                            <input 
+                                   class="form-control"
+                                   placeholder="Digite o nome do livro">
+                            <span aclass="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group mb-3">
+                            <label  class="form-label">Data do Empréstimo</label>
+                            <input 
+                                   class="form-control"
+                                  placeholder=@ViewBag.data
+                                   readonly>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                   
+                    <button type="submit" class="btn btn-primary">Registrar Empréstimo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@{
+    /*
+         <script>
+         // Set current datetime when page loads
+         document.addEventListener('DOMContentLoaded', function () {
+             const now = new Date();
+             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+             document.getElementById('@Html.IdFor(m => m.DataEmprestimoLivro)').value = now.toISOString().slice(0, 16);
+     });
+     </script>
+    */
+}
