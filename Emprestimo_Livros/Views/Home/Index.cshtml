@@ -1,5 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Pagina Inicial";
+}
+
+@if(ViewBag.mensagem != null)
+{
+    <script>
+        alert("@ViewBag.mensagem"")
+    </script>
 }
 
 <div class="text-center">

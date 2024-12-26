@@ -1,5 +1,6 @@
 ﻿using Emprestimo_Livros.Data;
 using Emprestimo_Livros.Models;
+using Emprestimo_Livros.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Emprestimo_Livros.Controllers
@@ -9,9 +10,13 @@ namespace Emprestimo_Livros.Controllers
     {
         private readonly ApplicationDBContext _dbContext;
 
-        public EmprestimoLivrosController(ApplicationDBContext dbContext)
+        public EmprestimoRepository _emprestimoRepository;
+
+
+        public EmprestimoLivrosController(ApplicationDBContext dbContext, EmprestimoRepository emprestimoRepository)
         {
             _dbContext = dbContext;
+            _emprestimoRepository = emprestimoRepository;
         }
 
         [HttpGet("Consultar")]
@@ -27,7 +32,8 @@ namespace Emprestimo_Livros.Controllers
             ViewBag.sucesso = null;
             var model = new EmprestimoModel
             {
-                DataEmprestimoLivro = DateTime.Now 
+                DataEmprestimoLivro = DateTime.Now,
+                Status = "Emprestado"
             };
             return View("Registrar", model);
         }
@@ -43,11 +49,12 @@ namespace Emprestimo_Livros.Controllers
         public IActionResult ResultadoRegistrar(EmprestimoModel emprestimo)
         {
             emprestimo.DataEmprestimoLivro = DateTime.Now;
+            emprestimo.Status = "Emprestado";
 
             if (ModelState.IsValid)
             {
                 _dbContext.EmprestimoLivros.Add(emprestimo);
-                _dbContext.SaveChanges();
+                _dbContext.SaveChanges(); //passar para repository
                 ViewBag.sucesso = true;
                 ViewBag.mensagem = "Registro realizado com sucesso!";
             }
@@ -59,5 +66,48 @@ namespace Emprestimo_Livros.Controllers
 
             return View("Registrar", emprestimo);
         }
+
+        [HttpPost("Editar")]
+        public IActionResult Editar(int id)
+        {
+
+            EmprestimoModel emprestimo = new EmprestimoModel();
+            emprestimo = _emprestimoRepository.ListarPorId(id);
+
+            return View("editar", emprestimo);
+        }
+
+
+        [HttpPost("ResultadoEdicao")]
+        public IActionResult ResultadoEdicao(EmprestimoModel emprestimo)
+        {
+
+
+            if (_emprestimoRepository.Editar(emprestimo))
+            {
+                ViewBag.mensagem = "Item registrado com sucesso !";
+
+                return View("~/Views/Home/Index.cshtml");
+
+            }
+
+            ViewBag.mensagem = "Item não pode ser registrado !";
+            return Editar(emprestimo.Id);
+
+
+        }
+
+        [HttpPost("Excluir")]
+        public IActionResult Deletar(int id)
+        {
+            if (_emprestimoRepository.Excluir(id))
+            {
+                TempData["mensagem"] = "Item deletado com sucesso !";
+                
+            }
+            return RedirectToAction("Consultar");
+        }
+
+
     }
 }

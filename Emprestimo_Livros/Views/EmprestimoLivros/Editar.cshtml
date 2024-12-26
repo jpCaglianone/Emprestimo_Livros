@@ -1,27 +1,32 @@
 ﻿@model EmprestimoModel
 
-@if (ViewBag.sucesso != null)
+@if (ViewBag.mensagem != null)
 {
-    <h2 class="@(ViewBag.sucesso ? "text-success" : "text-danger")">@ViewBag.mensagem</h2>
+    <script>
+        alert('@ViewBag.mensagem')
+    </script>
 }
-
 <div class="container py-5">
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Registro de Empréstimo de Livros</h4>
+            <h4 class="mb-0">Edição de Empréstimo de Livros</h4>
         </div>
         <div class="card-body">
-            <form method="post" asp-action="Registrar">
+            <form method="post" asp-action="ResultadoEdicao">
                 <div class="row g-3">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+                    <input 
+                        value="@Model.Id"
+                           asp-for="Id"
+                        type="hidden"
+                        readonly />
                     <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label class="form-label">Nome do Recebedor</label>
                             <input type="text"
                                    asp-for="RecebedorNome"
                                    class="form-control"
-                                   placeholder="Digite o nome de quem está recebendo o livro">
+                                    value="@Model.RecebedorNome">
                             <span class="text-danger" asp-validation-for="RecebedorNome"></span>
                         </div>
                     </div>
@@ -32,7 +37,7 @@
                             <input type="text"
                                    asp-for="LivroEmprestadoNome"
                                    class="form-control"
-                                   placeholder="Digite o nome do livro">
+                                    value="@Model.LivroEmprestadoNome">
                             <span class="text-danger" asp-validation-for="LivroEmprestadoNome"></span>
                         </div>
                     </div>
@@ -43,7 +48,7 @@
                             <input type="text"
                                    asp-for="FornecedorNome"
                                    class="form-control"
-                                   placeholder="Digite o nome de quem está emprestando o livro">
+                                    value="@Model.FornecedorNome">
                             <span class="text-danger" asp-validation-for="FornecedorNome"></span>
                         </div>
                     </div>
@@ -54,6 +59,7 @@
                             <input type="text"
                                    asp-for="DataEmprestimoLivro"
                                    class="form-control"
+                                   value="@Model.DataEmprestimoLivro"
                                    readonly>
                             <span class="text-danger" asp-validation-for="DataEmprestimoLivro"></span>
                         </div>
@@ -64,6 +70,7 @@
                     <label class="form-label">Status: </label>
                     <input asp-for="Status"
                            readonly
+                           value="@Model.Status"
                            type="text"
                            class="form-control">
 

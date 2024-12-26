@@ -47,3 +47,7 @@
 	
 
 
+	6. Criação de repository, é necessário adicionar no program.cs
+	builder.Services.AddScoped<EmprestimoRepository>(); ou builder.Services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
+	e injetar a dependencia do repository
+
