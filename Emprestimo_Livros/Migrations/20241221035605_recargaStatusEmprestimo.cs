@@ -13,10 +13,8 @@ namespace Emprestimo_Livros.Migrations
             var sqlFilePath = Path.Combine("Scripts", "RecargaStatusEmprestimo.sql");
             var sqlScript = File.ReadAllText(sqlFilePath);
 
-
             migrationBuilder.Sql(sqlScript); 
 
-            migrationBuilder.Sql(sqlScript);
         }
 
         /// <inheritdoc />

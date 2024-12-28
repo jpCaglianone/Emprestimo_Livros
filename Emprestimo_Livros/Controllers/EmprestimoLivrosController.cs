@@ -1,6 +1,7 @@
 ﻿using Emprestimo_Livros.Data;
 using Emprestimo_Livros.Models;
 using Emprestimo_Livros.Repository;
+using Emprestimo_Livros.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Emprestimo_Livros.Controllers
@@ -12,11 +13,14 @@ namespace Emprestimo_Livros.Controllers
 
         public EmprestimoRepository _emprestimoRepository;
 
+        public EmprestimoService _emprestimoService { get; set; }
 
-        public EmprestimoLivrosController(ApplicationDBContext dbContext, EmprestimoRepository emprestimoRepository)
+
+        public EmprestimoLivrosController(ApplicationDBContext dbContext, EmprestimoRepository emprestimoRepository, EmprestimoService emprestimoService)
         {
             _dbContext = dbContext;
             _emprestimoRepository = emprestimoRepository;
+            _emprestimoService = emprestimoService;
         }
 
         [HttpGet("Consultar")]
@@ -109,5 +113,32 @@ namespace Emprestimo_Livros.Controllers
         }
 
 
+        [HttpPost("api/ConsultarRecebedor")]
+        public IActionResult ConsultarPorRecebedor([FromBody] Dictionary<string, object> request)
+        {
+            string nomeRecebedor = request["nomeRecebedor"]?.ToString();
+
+            (IEnumerable<EmprestimoModel> resultado, string mensagem ) = _emprestimoService.ConsultarRecebedor(nomeRecebedor);
+
+            return Ok(new
+            {
+                success = new
+                {
+                    sucess = true,
+                    data = new
+                    {
+                        resultado = resultado
+                    },
+                    mensagem = mensagem
+                }
+            });
+
+
+            //criar a class para response json
+        }
+
+
     }
+
+
 }

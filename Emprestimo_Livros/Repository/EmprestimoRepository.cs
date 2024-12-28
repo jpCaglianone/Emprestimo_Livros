@@ -1,5 +1,7 @@
 ﻿using Emprestimo_Livros.Data;
 using Emprestimo_Livros.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace Emprestimo_Livros.Repository
 {
@@ -58,6 +60,19 @@ namespace Emprestimo_Livros.Repository
             }
 
             return false;
+        }
+
+
+        public IEnumerable<EmprestimoModel> ConsultarRecebedor(string nome)
+        {
+            var sqlFilePath = Path.Combine("Scripts", "ConsultaRecebedor.sql");
+            var sqlScript = File.ReadAllText(sqlFilePath);
+
+            return _db.EmprestimoLivros.FromSqlRaw(sqlScript, new SqlParameter("@Nome", "%" + nome + "%"));
+            // entender o SqlParameter
+            // tratar resultado
+            
+
         }
     }
 }

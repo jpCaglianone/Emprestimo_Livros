@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Emprestimo_Livros</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/materia.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Emprestimo_Livros.styles.css" asp-append-version="true" />
+    <link href="https://cdn.datatables.net/v/dt/dt-2.1.8/datatables.min.css" rel="stylesheet">
+
+   
 </head>
 <body>
     <header>
@@ -47,7 +50,7 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3" id="main">
             @RenderBody()
         </main>
     </div>
@@ -57,9 +60,14 @@
             &copy; 2024 - Emprestimo_Livros - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+
+    <script src="https://cdn.datatables.net/v/dt/dt-2.1.8/datatables.min.js"></script>
 </body>
+
 </html>

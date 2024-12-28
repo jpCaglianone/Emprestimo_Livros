@@ -3,9 +3,12 @@
     var mensagem = TempData["mensagem"];
 }
 
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<input 
+    class="bg-green"
+    type="button" 
+    value="Exportar csv"/>
 
 @if (mensagem != null)
 {
@@ -21,7 +24,7 @@
 }
 
 
-<table class="table table-dark table-hover">
+<table id="Emprestimos" class="table table-dark table-hover">
 
     <thead>
         <tr>
