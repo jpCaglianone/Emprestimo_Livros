@@ -138,6 +138,30 @@ namespace Emprestimo_Livros.Controllers
         }
 
 
+        [HttpPost("api/ConsultaFornecedor")]
+        public IActionResult ConsultaPorFornecedor([FromBody] Dictionary<string, object> request)
+        {
+            string nomeFornecedor = request["nomeFornecedor"]?.ToString();
+
+            (IEnumerable<EmprestimoModel> resultado, string mensagem) = _emprestimoService.ConsultarFornecedor(nomeFornecedor);
+
+            return Ok(new
+            {
+                success = new
+                {
+                    sucess = true,
+                    data = new
+                    {
+                        resultado = resultado
+                    },
+                    mensagem = mensagem
+                }
+            });
+
+
+            //criar a class para response json
+        }
+
     }
 
 

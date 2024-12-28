@@ -68,10 +68,25 @@ namespace Emprestimo_Livros.Repository
             var sqlFilePath = Path.Combine("Scripts", "ConsultaRecebedor.sql");
             var sqlScript = File.ReadAllText(sqlFilePath);
 
-            return _db.EmprestimoLivros.FromSqlRaw(sqlScript, new SqlParameter("@Nome", "%" + nome + "%"));
+            var nomeSql = new SqlParameter("@Nome", "%" + nome + "%");
+
+            return _db.EmprestimoLivros.FromSqlRaw(sqlScript, nomeSql);
             // entender o SqlParameter
             // tratar resultado
             
+
+        }
+        public IEnumerable<EmprestimoModel> ConsultarFornecedor(string nome)
+        {
+            var sqlFilePath = Path.Combine("Scripts", "ConsultaFornecedor.sql");
+            var sqlScript = File.ReadAllText(sqlFilePath);
+
+            var nomeSql = new SqlParameter("@Nome", "%" + nome + "%");
+
+            return _db.EmprestimoLivros.FromSqlRaw(sqlScript, nomeSql);
+            // entender o SqlParameter
+            // tratar resultado
+
 
         }
     }

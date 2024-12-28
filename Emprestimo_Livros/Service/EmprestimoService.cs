@@ -27,6 +27,18 @@ namespace Emprestimo_Livros.Service
           return  (_repository.ConsultarRecebedor (nome), mensagem);
         }
 
+        public (IEnumerable<EmprestimoModel> resultado, string mensagem) ConsultarFornecedor(string nome)
+        {
+
+            (bool sucesso, string mensagem) = validacaoNome(nome);
+            if (!sucesso)
+            {
+                return (Enumerable.Empty<EmprestimoModel>(), mensagem);
+            }
+
+            return (_repository.ConsultarFornecedor(nome), mensagem);
+        }
+
         public (bool validade, string erro) validacaoNome(string nome)
         {
             if (string.IsNullOrEmpty(nome) || !nome.All(n => char.IsLetter(n)) )
