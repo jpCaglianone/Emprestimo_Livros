@@ -3,6 +3,7 @@ using Emprestimo_Livros.Models;
 using Emprestimo_Livros.Repository;
 using Emprestimo_Livros.Service;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace Emprestimo_Livros.Controllers
 {
@@ -15,7 +16,7 @@ namespace Emprestimo_Livros.Controllers
 
         public EmprestimoService _emprestimoService { get; set; }
 
-
+        //injeção de dependências
         public EmprestimoLivrosController(ApplicationDBContext dbContext, EmprestimoRepository emprestimoRepository, EmprestimoService emprestimoService)
         {
             _dbContext = dbContext;
@@ -81,7 +82,6 @@ namespace Emprestimo_Livros.Controllers
             return View("editar", emprestimo);
         }
 
-
         [HttpPost("ResultadoEdicao")]
         public IActionResult ResultadoEdicao(EmprestimoModel emprestimo)
         {
@@ -112,7 +112,6 @@ namespace Emprestimo_Livros.Controllers
             return RedirectToAction("Consultar");
         }
 
-
         [HttpPost("api/ConsultarRecebedor")]
         public IActionResult ConsultarPorRecebedor([FromBody] Dictionary<string, object> request)
         {
@@ -136,7 +135,6 @@ namespace Emprestimo_Livros.Controllers
 
             //criar a class para response json
         }
-
 
         [HttpPost("api/ConsultaFornecedor")]
         public IActionResult ConsultaPorFornecedor([FromBody] Dictionary<string, object> request)
@@ -162,7 +160,34 @@ namespace Emprestimo_Livros.Controllers
             //criar a class para response json
         }
 
-    }
+        [HttpGet("GeracaoCSV")]
+        public IActionResult GeracaoCSV()
+        {
 
+
+            // passar regra para o service e colocar o cabeçalho, junto com mensagem de relatorio gerado com sucesso
+            // ou sem dados para o relatorio (nesse caso, nem ativar o botao para geracao)
+            //incluir opcao para gerar o relatorio de acordo com oque é mostrado na view, com aplicacao de filtro
+
+            IEnumerable<EmprestimoModel> lista = _dbContext.EmprestimoLivros.ToList();
+
+            string rel = "";
+
+            foreach (EmprestimoModel model in lista)
+            {
+                rel += model.LivroEmprestadoNome + "\t" + 
+                    model.RecebedorNome +"\t" +
+                    model.FornecedorNome + "\t" +
+                    model.DataEmprestimoLivro + "\n" ;
+            }
+
+            ExportarCSVService exp = new ExportarCSVService();
+
+            exp.GerarCSV(rel);
+
+            return Ok();
+        }
+
+    }
 
 }
