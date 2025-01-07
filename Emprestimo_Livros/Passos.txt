@@ -51,3 +51,7 @@
 	builder.Services.AddScoped<EmprestimoRepository>(); ou builder.Services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
 	e injetar a dependencia do repository
 
+
+
+
+	7. para geraçao de relatorio, opcionalmente, foi instalado o closed xml (relatorioCT), com o pacote nuget

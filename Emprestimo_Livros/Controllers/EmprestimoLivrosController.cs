@@ -1,4 +1,5 @@
-﻿using Emprestimo_Livros.Data;
+﻿
+using Emprestimo_Livros.Data;
 using Emprestimo_Livros.Models;
 using Emprestimo_Livros.Repository;
 using Emprestimo_Livros.Service;
@@ -10,19 +11,28 @@ namespace Emprestimo_Livros.Controllers
     [Route("EmprestimoLivros")]
     public class EmprestimoLivrosController : Controller
     {
+        #region InjecaoDependencia
+
         private readonly ApplicationDBContext _dbContext;
 
         public EmprestimoRepository _emprestimoRepository;
 
+        public ExportarCSVService _exportarCSVService;
         public EmprestimoService _emprestimoService { get; set; }
 
         //injeção de dependências
-        public EmprestimoLivrosController(ApplicationDBContext dbContext, EmprestimoRepository emprestimoRepository, EmprestimoService emprestimoService)
+        public EmprestimoLivrosController(ApplicationDBContext dbContext, 
+                                          EmprestimoRepository emprestimoRepository, 
+                                          EmprestimoService emprestimoService, 
+                                          ExportarCSVService exportarCSVService)
         {
             _dbContext = dbContext;
             _emprestimoRepository = emprestimoRepository;
             _emprestimoService = emprestimoService;
+            _exportarCSVService = exportarCSVService;
         }
+
+        #endregion
 
         [HttpGet("Consultar")]
         public IActionResult Consultar()
@@ -181,11 +191,19 @@ namespace Emprestimo_Livros.Controllers
                     model.DataEmprestimoLivro + "\n" ;
             }
 
-            ExportarCSVService exp = new ExportarCSVService();
-
-            exp.GerarCSV(rel);
+            _exportarCSVService.GerarCSV(rel);
 
             return Ok();
+        }
+
+        [HttpGet("GeracaoExcel")]
+        public IActionResult GeracaoExcel() {
+
+            var fileBytes = _exportarCSVService.ExportarExcel();
+            return File(fileBytes,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "Emprestimo.xlsx");
+
         }
 
     }

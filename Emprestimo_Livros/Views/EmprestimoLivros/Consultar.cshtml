@@ -5,10 +5,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<input 
-    class="bg-green"
-    type="button" 
-    value="Exportar csv"/>
+<a 
+    class="btn btn-success text-white"
+    type="button"  
+    asp-controller="EmprestimoLivros"
+    asp-action="GeracaoExcel"> Exportar .xls </a>
+<a class="btn btn-success text-white"
+   type="button"
+   asp-controller="EmprestimoLivros"
+   asp-action="GeracaoCSV"> Exportar .csv </a>
 
 @if (mensagem != null)
 {
