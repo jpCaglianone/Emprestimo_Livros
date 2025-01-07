@@ -1,13 +1,18 @@
-﻿
+﻿@model Usuario.DTO.UsuarioRegistroDTO
+
 <link rel="stylesheet" href="./css/style.css" asp-append-version="true" />
 
 <section class="vh-100">
+    
     <div class="container-fluid h-custom">
+        
         <div class="row d-flex justify-content-center align-items-center h-100">
+            
             <div class="col-md-9 col-lg-6 col-xl-5">
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
                      class="img-fluid" alt="Sample image">
             </div>
+
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                 <form asp-action="RegistrarPost" asp-controller="Usuario" method="post">
                     <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
@@ -30,31 +35,46 @@
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="name" id="Nome" class="form-control form-control-lg"
-                               placeholder="Enter a valid name" />
+                        <input asp-for="Nome"
+                               type="text" 
+                               id="Nome" 
+                               class="form-control form-control-lg"
+                               placeholder="Enter a valid name" 
+                               />
                         <label class="form-label" for="nome">Nome </label>
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="name" id="Sobrenome" class="form-control form-control-lg"
+                        <input asp-for="Sobrenome"
+                               type="name" id="Sobrenome" 
+                               class="form-control form-control-lg"
                                placeholder="Enter a valid name" />
                         <label class="form-label" for="Sobrenome">Nome </label>
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="email" id="Email" class="form-control form-control-lg"
+                        <input asp-for="Email"
+                               type="email" 
+                               id="Email" 
+                               class="form-control form-control-lg"
                                placeholder="Enter a valid email address" />
                         <label class="form-label" for="email">Email address</label>
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-3">
-                        <input type="password" id="Senha" class="form-control form-control-lg"
+                        <input asp-for="Senha"
+                               type="password" 
+                               id="Senha" 
+                               class="form-control form-control-lg"
                                placeholder="Enter password" />
                         <label class="form-label" for="senha">Password</label>
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-3">
-                        <input type="password" id="ConfirmarSenha" class="form-control form-control-lg"
+                        <input asp-for="ConfirmarSenha"
+                               type="password" 
+                               id="ConfirmarSenha" 
+                               class="form-control form-control-lg"
                                placeholder="Confirm password" />
                         <label class="form-label" for="confirmarSenha">Password</label>
                     </div>

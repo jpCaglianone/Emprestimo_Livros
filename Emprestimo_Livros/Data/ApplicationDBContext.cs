@@ -8,7 +8,7 @@ namespace Emprestimo_Livros.Data
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
     
         public DbSet<EmprestimoModel> EmprestimoLivros { get; set; }
-
-    
+   
     }
 }
+ 

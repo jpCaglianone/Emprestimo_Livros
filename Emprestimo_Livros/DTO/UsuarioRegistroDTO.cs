@@ -1,4 +1,4 @@
-﻿namespace Emprestimo_Livros.DTO
+﻿namespace Usuario.DTO
 {
     public class UsuarioRegistroDTO
     {

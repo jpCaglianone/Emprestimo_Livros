@@ -1,15 +1,20 @@
 using Emprestimo_Livros.Data;
 using Emprestimo_Livros.Repository;
 using Emprestimo_Livros.Service;
+using Emprestimo_Livros.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddScoped<EmprestimoRepository>();
+
 builder.Services.AddScoped<EmprestimoService>();
 builder.Services.AddScoped<ExportarCSVService>();
+builder.Services.AddScoped<IUsuarioRegistroService, UsuarioRegistroService>();
+
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

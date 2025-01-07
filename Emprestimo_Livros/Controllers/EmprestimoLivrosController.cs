@@ -52,7 +52,7 @@ namespace Emprestimo_Livros.Controllers
             };
             return View("Registrar", model);
         }
-
+            
         [HttpGet("api/Consultar")]
         public IEnumerable<EmprestimoModel> ApiConsultar()
         {

@@ -1,5 +1,6 @@
-﻿using Emprestimo_Livros.DTO;
+﻿
 using Microsoft.AspNetCore.Mvc;
+using Usuario.DTO;
 
 namespace Usuario.Controllers
 {
@@ -17,6 +18,9 @@ namespace Usuario.Controllers
         [HttpPost("/Registrar")]
         public IActionResult RegistrarPost(UsuarioRegistroDTO registroDTO)
         {
+
+            var a = registroDTO.Email;
+
             return View("Registrar");
         }
     }
