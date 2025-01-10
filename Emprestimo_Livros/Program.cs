@@ -9,8 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Repositories
 builder.Services.AddScoped<EmprestimoRepository>();
+builder.Services.AddScoped<UsuarioRepository>();    
 
+// Sercices
 builder.Services.AddScoped<EmprestimoService>();
 builder.Services.AddScoped<ExportarCSVService>();
 builder.Services.AddScoped<IUsuarioRegistroService, UsuarioRegistroService>();
