@@ -6,7 +6,7 @@ namespace Emprestimo_Livros.Service.Interfaces
     public interface IUsuarioRegistroService
     {
 
-        Task<ResponseModel<UsuarioModel>> RegistrarUsuario(UsuarioRegistroDTO dto);
+        ResponseModel<UsuarioModel> RegistrarUsuario(UsuarioRegistroDTO dto);
 
     }
 }

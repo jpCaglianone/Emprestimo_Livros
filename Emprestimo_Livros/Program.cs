@@ -17,6 +17,7 @@ builder.Services.AddScoped<UsuarioRepository>();
 builder.Services.AddScoped<EmprestimoService>();
 builder.Services.AddScoped<ExportarCSVService>();
 builder.Services.AddScoped<IUsuarioRegistroService, UsuarioRegistroService>();
+builder.Services.AddScoped<ISenhaService, SenhaService>();
 
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
