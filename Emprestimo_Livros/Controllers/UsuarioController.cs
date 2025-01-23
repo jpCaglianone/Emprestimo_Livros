@@ -1,4 +1,5 @@
 ﻿
+using Emprestimo_Livros.DTO;
 using Emprestimo_Livros.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Usuario.DTO;
@@ -10,10 +11,12 @@ namespace Usuario.Controllers
     {
 
         private readonly IUsuarioRegistroService _registroService;
+        private readonly ISessaoInterface _sessaoInterface;
 
-        public UsuarioController (IUsuarioRegistroService registroService)
+        public UsuarioController (IUsuarioRegistroService registroService, ISessaoInterface sessaoInterface)
         {
             _registroService = registroService;
+            _sessaoInterface = sessaoInterface;
         }   
 
         [HttpGet("/Registrar")]
@@ -49,5 +52,42 @@ namespace Usuario.Controllers
             }
            
         }
+
+
+
+        [HttpGet("/Login")]
+        public IActionResult LoginGet(UsuarioRegistroDTO registroDTO)
+        {
+
+            return View("Login");
+        }
+
+        [HttpPost("/Login")]
+        public IActionResult LoginPost(LoginDTO dto)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var usuario = _registroService.LoginUsuario(dto);
+                if (usuario.Status) {
+                    TempData["Mensagem"] =usuario.Mensagem;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["Mensagem"] = usuario.Mensagem;
+                    return RedirectToAction("Index", dto);
+
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");   
+            }
+
+            return View("Login");
+
+        }
+
     }
 }

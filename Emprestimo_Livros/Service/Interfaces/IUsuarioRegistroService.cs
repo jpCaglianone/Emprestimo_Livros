@@ -1,4 +1,5 @@
-﻿using Emprestimo_Livros.Models;
+﻿using Emprestimo_Livros.DTO;
+using Emprestimo_Livros.Models;
 using Usuario.DTO;
 
 namespace Emprestimo_Livros.Service.Interfaces
@@ -7,6 +8,7 @@ namespace Emprestimo_Livros.Service.Interfaces
     {
 
         ResponseModel<UsuarioModel> RegistrarUsuario(UsuarioRegistroDTO dto);
+        ResponseModel<UsuarioModel> LoginUsuario(LoginDTO loginDto);
 
     }
 }

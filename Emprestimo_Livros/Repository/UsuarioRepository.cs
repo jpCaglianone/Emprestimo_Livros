@@ -26,5 +26,11 @@ namespace Emprestimo_Livros.Repository
 
             return true;
         }
+
+        public UsuarioModel? ProcuraUsuarioEmail(string email)
+        {
+           return _dbContext.Usuario.FirstOrDefault(x => x.Email == email);
+        }
+
     }
 }
